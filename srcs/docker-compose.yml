@@ -8,6 +8,8 @@ services:
             - custom_net
         build:
             context: requirements/nginx
+        volumes:
+            - wordpress:/var/www/wordpress
     mariadb:
         container_name: mariadb
         image: mariadb
@@ -17,6 +19,8 @@ services:
             - custom_net
         build:
             context: requirements/mariadb
+        volumes:
+            - mariadb:/var/lib/mysql
     wordpress:
         container_name: wordpress
         image: wordpress
@@ -24,6 +28,22 @@ services:
             - custom_net
         build:
             context: requirements/wordpress
+        volumes:
+           - wordpress:/var/www/wordpress 
+
+volumes:
+    mariadb:
+        driver: local
+        driver_opts:
+            type: 'none'
+            o: 'bind'
+            device: /home/edarnand/data/mariadb
+    wordpress:
+        driver: local
+        driver_opts:
+            type: 'none'
+            o: 'bind'
+            device: /home/edarnand/data/wordpress
 
 networks:
     custom_net:

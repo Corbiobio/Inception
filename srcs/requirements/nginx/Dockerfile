@@ -2,11 +2,9 @@ FROM debian:11
 
 RUN apt update && apt install -y nginx openssl
 
-RUN mkdir -p /data/www /etc/nginx/conf.d/
+RUN mkdir -p /var/www/wordpress /etc/nginx/conf.d/ && chmod 755 /var/www/wordpress
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY index.html /data/www/index.html
-
 
 RUN mkdir -p /etc/nginx/ssl/
 RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes \
