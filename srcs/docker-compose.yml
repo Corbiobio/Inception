@@ -2,6 +2,7 @@ services:
     nginx:
         container_name: nginx
         image: nginx
+        restart: on-failure
         ports:
             - "443:443"
         networks:
@@ -13,6 +14,7 @@ services:
     mariadb:
         container_name: mariadb
         image: mariadb
+        restart: on-failure
         secrets:
             - token
         networks:
@@ -24,6 +26,7 @@ services:
     wordpress:
         container_name: wordpress
         image: wordpress
+        restart: on-failure
         networks:
             - custom_net
         build:
@@ -48,9 +51,10 @@ volumes:
             device: /home/edarnand/data/wordpress
 
 networks:
-    custom_net:
-        driver: bridge
+  custom_net:
+    name: custom_net
+    driver: bridge
 
 secrets:
-    token:
-        environment: "HOME"
+  token:
+    environment: "HOME"

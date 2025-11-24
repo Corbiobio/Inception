@@ -23,20 +23,24 @@ if ! [ -f wp-config.php ]; then
 
     wp core download --allow-root
 
-    wp config create \
-        --allow-root \
+    wp config create --allow-root \
         --dbname=db_name \
         --dbuser=db_user \
         --dbpass=password \
         --dbhost=mariadb
 
-   wp core install \
-        --allow-root \
+   wp core install --allow-root \
         --url=https://edarnand.42.fr \
-        --title="WordPress Site" \
+        --title=best_wordpress_site \
         --admin_user=db_user \
         --admin_password=password \
         --admin_email=fake@mail.com
+
+   wp user create --allow-root \
+	not_the_admin \
+   	fake1@mail.com \
+	--user_pass=password \
+	--role=editor
 fi
 
 exec /usr/sbin/php-fpm7.4 -F
