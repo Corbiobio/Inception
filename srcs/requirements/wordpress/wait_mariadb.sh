@@ -18,8 +18,25 @@ done
 
 cd /var/www/wordpress
 
-wp core download --allow-root
-wp config create --allow-root --dbname=db_name --dbuser=db_user --dbpass=password --dbhost=mariadb
-wp core install --allow-root --url=https://edarnand.42.fr --title=wordpress_of_the_year --admin_user=db_user --admin_password=password --admin_email=fake_mail@fake.com
+if ! [ -f wp-config.php ]; then
+    echo "Installing WordPress..."
+
+    wp core download --allow-root
+
+    wp config create \
+        --allow-root \
+        --dbname=db_name \
+        --dbuser=db_user \
+        --dbpass=password \
+        --dbhost=mariadb
+
+   wp core install \
+        --allow-root \
+        --url=https://edarnand.42.fr \
+        --title="WordPress Site" \
+        --admin_user=db_user \
+        --admin_password=password \
+        --admin_email=fake@mail.com
+fi
 
 exec /usr/sbin/php-fpm7.4 -F

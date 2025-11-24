@@ -7,6 +7,7 @@ RUN mkdir -p /var/www/wordpress /etc/nginx/conf.d/ && chmod 755 /var/www/wordpre
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 RUN mkdir -p /etc/nginx/ssl/
+
 RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes \
         -out /etc/nginx/ssl/certificate.crt \
         -keyout /etc/nginx/ssl/key.key \

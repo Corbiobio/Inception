@@ -1,6 +1,6 @@
 FROM debian:11
 
-RUN apt update && apt install -y curl php-mysqli php-common libapache2-mod-php php-cli php-fpm mariadb-client
+RUN apt update && apt install -y curl php-mysqli php-common php-cli php-fpm mariadb-client
 
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
