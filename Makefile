@@ -25,10 +25,12 @@ fclean: clean
 	sudo rm -rf $(VLM_FOLDER) 
 	docker system prune -af
 
+re: fclean all
+
 log:
 	docker compose logs
 
 ps:
 	docker compose ps -a
 
-.PHONY: all build volume clean fclean log ps
+.PHONY: all build volume clean fclean re log ps

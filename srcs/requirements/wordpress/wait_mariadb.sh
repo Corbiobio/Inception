@@ -1,9 +1,11 @@
 #!/bin/sh
 
+echo aaaaaaaaaaaaaaaa
+
 max=10
 for i in `seq 1 $max`
 do
-    mariadb-admin ping --host="mariadb" --user="db_user" --password="password" | grep alive
+	mysql --host=${DB_HOST} --user=${DB_USER} --password=${DB_PASS} -e "USE ${DB_NAME};"
     if [ $? -eq 0 ]; then
         echo "mariadb up !"
         break
@@ -24,22 +26,22 @@ if ! [ -f wp-config.php ]; then
     wp core download --allow-root
 
     wp config create --allow-root \
-        --dbname=db_name \
-        --dbuser=db_user \
-        --dbpass=password \
-        --dbhost=mariadb
+        --dbname=${DB_NAME} \
+        --dbuser=${DB_USER} \
+        --dbpass=${DB_PASS} \
+        --dbhost=${DB_HOST}
 
    wp core install --allow-root \
         --url=https://edarnand.42.fr \
         --title=best_wordpress_site \
-        --admin_user=db_user \
-        --admin_password=password \
+        --admin_user=${WP_ADMIN} \
+        --admin_password=${WP_ADMIN_PASS} \
         --admin_email=fake@mail.com
 
    wp user create --allow-root \
-	not_the_admin \
+	${WP_EDITOR} \
    	fake1@mail.com \
-	--user_pass=password \
+	--user_pass=${WP_EDITOR_PASS} \
 	--role=editor
 fi
 

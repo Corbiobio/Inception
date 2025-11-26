@@ -6,7 +6,7 @@ services:
     ports:
       - "443:443"
     networks:
-    - custom_net
+      - custom_net
     build:
       context: requirements/nginx
     volumes:
@@ -20,6 +20,10 @@ services:
       - custom_net
     build:
       context: requirements/mariadb
+      args:
+        - DB_NAME=$DB_NAME
+        - DB_USER=$DB_USER
+        - DB_PASS=$DB_PASS
     volumes:
       - mariadb:/var/lib/mysql
 
@@ -27,6 +31,14 @@ services:
     container_name: wordpress
     image: wordpress
     restart: on-failure
+    env_file:
+      - .env
+    #environment:
+    #  - DB_NAME=$DB_NAME
+    #  - DB_USER=$DB_USER
+    #  - DB_PASS=$DB_PASS
+    #  - DB_HOST=$DB_HOST
+    #  - WP_ADMIN=$WP_ADMIN
     networks:
       - custom_net
     build:
