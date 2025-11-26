@@ -1,60 +1,112 @@
 services:
-    nginx:
-        container_name: nginx
-        image: nginx
-        restart: on-failure
-        ports:
-            - "443:443"
-        networks:
-            - custom_net
-        build:
-            context: requirements/nginx
-        volumes:
-            - wordpress:/var/www/wordpress
-    mariadb:
-        container_name: mariadb
-        image: mariadb
-        restart: on-failure
-        secrets:
-            - token
-        networks:
-            - custom_net
-        build:
-            context: requirements/mariadb
-        volumes:
-            - mariadb:/var/lib/mysql
-    wordpress:
-        container_name: wordpress
-        image: wordpress
-        restart: on-failure
-        networks:
-            - custom_net
-        build:
-            context: requirements/wordpress
-        volumes:
-           - wordpress:/var/www/wordpress 
+  nginx:
+    container_name: nginx
+    image: nginx
+    restart: on-failure
+    ports:
+      - "443:443"
+    networks:
+      - custom_net
+    build:
+      context: requirements/nginx
+    volumes:
+      - wordpress:/var/www/wordpress
+
+  mariadb:
+    container_name: mariadb
+    image: mariadb
+    restart: on-failure
+    networks:
+      - custom_net
+    build:
+      context: requirements/mariadb
+    volumes:
+      - mariadb:/var/lib/mysql
+
+  wordpress:
+    container_name: wordpress
+    image: wordpress
+    restart: on-failure
+    networks:
+      - custom_net
+    build:
+      context: requirements/wordpress
+    volumes:
+       - wordpress:/var/www/wordpress
 
 volumes:
-    mariadb:
-        name: mariadb
-        driver: local
-        driver_opts:
-            type: 'none'
-            o: 'bind'
-            device: /home/edarnand/data/mariadb
-    wordpress:
-        name: wordpress
-        driver: local
-        driver_opts:
-            type: 'none'
-            o: 'bind'
-            device: /home/edarnand/data/wordpress
+  mariadb:
+    name: mariadb
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: /home/edarnand/data/mariadb
+  wordpress:
+    name: wordpress
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: /home/edarnand/data/wordpress
 
 networks:
   custom_net:
-    name: custom_net
-    driver: bridge
+  name: custom_net
+  driver: bridgeservices:
+  nginx:
+    container_name: nginx
+    image: nginx
+    restart: on-failure
+    ports:
+      - "443:443"
+    networks:
+      - custom_net
+    build:
+      context: requirements/nginx
+    volumes:
+      - wordpress:/var/www/wordpress
 
-secrets:
-  token:
-    environment: "HOME"
+  mariadb:
+    container_name: mariadb
+    image: mariadb
+    restart: on-failure
+    networks:
+      - custom_net
+    build:
+      context: requirements/mariadb
+    volumes:
+      - mariadb:/var/lib/mysql
+
+  wordpress:
+    container_name: wordpress
+    image: wordpress
+    restart: on-failure
+    networks:
+      - custom_net
+    build:
+      context: requirements/wordpress
+    volumes:
+       - wordpress:/var/www/wordpress
+
+volumes:
+  mariadb:
+    name: mariadb
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: /home/edarnand/data/mariadb
+  wordpress:
+    name: wordpress
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: /home/edarnand/data/wordpress
+
+networks:
+  custom_net:
+  name: custom_net
+  driver: bridge
+
